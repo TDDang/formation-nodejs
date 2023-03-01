@@ -1,17 +1,22 @@
-console.log('Quelle est la destination des videos ?')
+import fastify from 'fastify'
 
-// On affiche la variable d'environement nommé NODE_ENV
+// Création d'une application (notre serveur logique HTTP)
+const app = fastify()
 
-console.log(process.env.NODE_ENV)
+// Première route sur le resource principale
+app.get('/', () => {
+  return 'Coucou'
+})
 
-// On affiche la variable d'environement nommé TZ
+// Seconde route permettan de saluer
+app.get('/hello', () => {
+  return 'Hello tout le monde !'
+})
 
-console.log(process.env.TZ)
-
-// On affiche la variable d'environement nommé HOST
-
-console.log(process.env.HOST)
-
-// On affiche la variable d'environement nommé PORT
-
-console.log(process.env.PORT)
+// On écoute une porte de notre ordinateur
+app.listen({ port: process.env.PORT as any, host: process.env.HOST }, () => {
+  // Petit fonction qui se déclenche lorsque notre serveur se met à écouter la porte
+  console.log(
+    `Mon serveur est prèt : http://${process.env.HOST}:${process.env.PORT}`,
+  )
+})
