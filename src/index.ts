@@ -1,17 +1,22 @@
 import fastify from 'fastify'
+import fastifyPlugin from 'fastify-plugin'
+import calculatriceRoutes from './routes/calculatrice'
+import testouilleRoutes from './routes/testouille'
 
 // Création d'une application (notre serveur logique HTTP)
 const app = fastify()
 
 // Première route sur le resource principale
 app.get('/', () => {
-  return 'Coucou'
+  return {
+    message: 'Coucou',
+  }
 })
 
-// Seconde route permettan de saluer
-app.get('/hello', () => {
-  return 'Hello tout le monde !'
-})
+// enregistremet de mon premier plugin
+app.register(fastifyPlugin(testouilleRoutes))
+// Enregistrement du plugin de calculatrice
+app.register(fastifyPlugin(calculatriceRoutes))
 
 // On écoute une porte de notre ordinateur
 app.listen({ port: process.env.PORT as any, host: process.env.HOST }, () => {
